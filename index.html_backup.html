@@ -1,141 +1,173 @@
 <!doctype html>
 <html lang="ko">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>트리원즈(Trionez) - 홈페이지 리뉴얼중</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <meta name="theme-color" content="#0f172a">
+    <meta name="theme-color" content="#0a0f1a">
     <style>
         :root{
-            --bg1:#0f172a; /* deep */
-            --bg2:#0b2036; /* blue */
-            --accent:#ffb86b;
-            --muted:#9aa6b2;
-            --card:rgba(255,255,255,0.035);
+            --bg1:#0a0f1a;
+            --bg2:#081626;
+            --accent:#00fff7;
+            --accent-light:#00b8d4;
+            --muted:#8a9ba8;
+            --card:rgba(255,255,255,0.02);
         }
-        *{box-sizing:border-box}
+        *{box-sizing:border-box;margin:0;padding:0}
         html,body{height:100%}
         body{
-            margin:0;
-            font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+            font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;
             background:linear-gradient(180deg,var(--bg1),var(--bg2));
-            color: #e6eef6;
-            -webkit-font-smoothing:antialiased;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            padding:32px;
+            color:#e6eef6;
+            display:flex;align-items:center;justify-content:center;
+            padding:32px;overflow:hidden;
         }
+        canvas#particles{position:fixed;top:0;left:0;z-index:0}
         .wrap{
-            width:100%;
-            max-width:1000px;
+            position:relative;z-index:1;
+            width:100%;max-width:960px;
             background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-            border-radius:18px;
-            padding:36px;
-            box-shadow: 0 10px 30px rgba(2,6,23,0.6);
-            display:grid;
-            grid-template-columns: 1fr 420px;
-            gap:28px;
-            align-items:center;
+            border-radius:20px;padding:40px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.6);
+            display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:center;
         }
-        @media(max-width:880px){
-            .wrap{grid-template-columns:1fr; padding:24px}
+        @media(max-width:880px){.wrap{grid-template-columns:1fr;padding:28px}}
+        h1{font-size:32px;line-height:1.3;margin-bottom:8px;}
+        h1 span{color:var(--accent);font-weight:600;font-size:20px;}
+        .lead{font-size:15px;color:var(--muted);line-height:1.6}
+        .status{margin-top:24px;padding:20px;border-radius:14px;background:var(--card);}
+        .status .small{font-size:13px;color:var(--muted);margin-bottom:8px}
+        .progress{height:10px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.08);}
+        .progress > i{
+            display:block;height:100%;
+            background:linear-gradient(90deg,var(--accent),var(--accent-light));
+            border-radius:999px;
+            transform-origin:left;
+            animation:fill 5s ease-in-out infinite alternate;
         }
-        .brand{
-            display:flex;
-            gap:18px;
-            align-items:center;
+        @keyframes fill{from{width:20%}to{width:80%}}
+        .btn{
+            display:inline-block;margin-top:18px;padding:12px 18px;
+            border-radius:12px;background:var(--accent);
+            color:#0a0f1a;font-weight:600;text-decoration:none;font-size:14px;
+            transition:all 0.25s ease;
         }
-        .logo{
-            width:86px;height:86px;flex:0 0 86px;border-radius:14px;
-            background:linear-gradient(135deg,var(--accent),#ffd6a3);
-            display:grid;place-items:center;color:#111;font-weight:800;font-size:22px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.5), inset 0 -6px 18px rgba(255,255,255,0.08);
-        }
-        h1{margin:0;font-size:34px;letter-spacing:-0.02em}
-        .lead{margin-top:8px;color:var(--muted);font-size:15px}
-        .status{margin-top:22px;padding:18px;background:var(--card);border-radius:12px;color:var(--muted);}
-        .progress{
-            margin-top:12px;height:10px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden
-        }
-        .progress > i{display:block;height:100%;width:44%;background:linear-gradient(90deg,var(--accent),#ffd6a3);border-radius:999px;transform-origin:left;animation:fill 6s ease-in-out infinite alternate}
-        @keyframes fill{from{width:18%}to{width:78%}}
+        .btn:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.3);}
         .right{
-            padding:22px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(6px);
+            padding:24px;border-radius:16px;
+            background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            backdrop-filter:blur(8px);text-align:center;
         }
-        .contact{display:flex;flex-direction:column;gap:8px}
-        .btn{display:inline-block;padding:10px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);font-weight:600;text-decoration:none;color:inherit}
-        .small{font-size:13px;color:var(--muted)}
-        .social{display:flex;gap:10px;margin-top:10px}
-        .social a{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.02);text-decoration:none;color:inherit;font-weight:600}
-        footer{margin-top:18px;font-size:13px;color:var(--muted)}
-        /* construction SVG animation */
-        .gear{width:220px;height:220px;margin:auto;display:grid;place-items:center}
-        .gear svg{width:160px;height:160px}
+        .gear{width:200px;height:200px;margin:auto;display:grid;place-items:center}
+        .gear svg{width:150px;height:150px;color:var(--accent)}
         .gear .spin{animation:spin 6s linear infinite}
         @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+        .right h3{font-size:18px;margin:14px 0 6px 0;font-weight:600}
+        .small{font-size:13px;color:var(--muted);line-height:1.5}
+        .contact{margin-top:14px;display:flex;flex-direction:column;gap:6px}
+        .contact strong{color:#fff}
+        footer{margin-top:24px;font-size:13px;color:var(--muted)}
     </style>
 </head>
 <body>
-<div class="wrap" role="main">
+<canvas id="particles"></canvas>
+
+<div class="wrap">
     <div>
-        <div class="brand">
-            <!--<div class="logo">트리원즈</div>-->
-            <div>
-                <h1>트리원즈(Trionez)<br><span style="font-weight:600;color:var(--accent);font-size:20px">공사중입니다</span></h1>
-                <p class="lead">현재 홈페이지 리뉴얼 작업중입니다. 불편을 드려 죄송하며 빠르게 더 나은 모습으로 찾아뵙겠습니다.</p>
-            </div>
-        </div>
+        <h1>트리원즈(Trionez)<br><span>공사중입니다</span></h1>
+        <p class="lead">현재 홈페이지 리뉴얼 작업중입니다.<br>빠르게 더 나은 IT 서비스로 찾아뵙겠습니다.</p>
 
         <div class="status">
             <div class="small">진행 상태</div>
             <div class="progress" aria-hidden="true"><i></i></div>
-            <div style="display:flex;gap:12px;margin-top:12px;align-items:center">
-                <a class="btn" href="mailto:hello@triowns.co.kr">문의: jiyoul.choi@trionez.com</a>
-                <!--<span class="small">또는 아래 SNS로 연락주세요</span>-->
-            </div>
+            <a class="btn" href="mailto:jiyoul.choi@trionez.com">문의하기</a>
         </div>
 
-        <footer>
-            © <span id="year"></span> Trionez. All rights reserved.
-        </footer>
+        <footer>© <span id="year"></span> Trionez. All rights reserved.</footer>
     </div>
 
-    <aside class="right" aria-labelledby="construction">
-        <div id="construction" style="text-align:center">
-            <div class="gear" aria-hidden="true">
-                <!-- simple animated gear SVG -->
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="spin" role="img" aria-label="공사 아이콘">
-                    <g fill="none" stroke="currentColor" stroke-width="4">
-                        <circle cx="50" cy="50" r="18" stroke-opacity="0.98" />
-                        <path d="M50 6 L54 20 L66 22 L60 34 L66 46 L54 50 L50 64 L46 50 L34 46 L40 34 L34 22 L46 20 Z" stroke-opacity="0.16"/>
-                    </g>
-                </svg>
-            </div>
-            <h3 style="margin:12px 0 6px 0">곧 새로운 모습으로 찾아옵니다</h3>
-            <p class="small">중요 공지나 긴급 문의가 있으시면 아래 연락처로 남겨주세요.</p>
-
-            <div class="contact" style="margin-top:14px">
-                <div class="small">전화: <strong style="color:#fff">010-3213-3113</strong></div>
-                <div class="small">이메일: <strong style="color:#fff">jiyoul.choi@trionez.com</strong></div>
-            </div>
-            <!--
-            <div class="social" aria-hidden="true">
-                <a href="#" title="Instagram">IG</a>
-                <a href="#" title="LinkedIn">IN</a>
-                <a href="#" title="Twitter">TW</a>
-            </div>
-            -->
+    <aside class="right">
+        <div class="gear">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="spin">
+                <g fill="none" stroke="currentColor" stroke-width="4">
+                    <circle cx="50" cy="50" r="18" stroke-opacity="0.95"/>
+                    <path d="M50 6 L54 20 L66 22 L60 34 L66 46 L54 50 L50 64 L46 50 L34 46 L40 34 L34 22 L46 20 Z" stroke-opacity="0.2"/>
+                </g>
+            </svg>
+        </div>
+        <h3>곧 새로운 모습으로 찾아옵니다</h3>
+        <p class="small">중요 공지나 문의는 아래 연락처로 남겨주세요.</p>
+        <div class="contact">
+            <div class="small">전화: <strong>010-3213-3113</strong></div>
+            <div class="small">이메일: <strong>jiyoul.choi@trionez.com</strong></div>
         </div>
     </aside>
 </div>
 
 <script>
-    // 자동으로 연도 갱신
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // IT 느낌 파티클 + 연결 라인
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const maxParticles = 70;
+    function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+    window.addEventListener('resize',resize);
+    resize();
+
+    class Particle{
+        constructor(){
+            this.reset();
+        }
+        reset(){
+            this.x=Math.random()*canvas.width;
+            this.y=Math.random()*canvas.height;
+            this.r=Math.random()*2+1;
+            this.vx=(Math.random()-0.5)*0.6;
+            this.vy=(Math.random()-0.5)*0.6;
+        }
+        draw(){
+            ctx.beginPath();
+            ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+            ctx.fillStyle='rgba(0,255,247,0.8)';
+            ctx.fill();
+        }
+        update(){
+            this.x+=this.vx;
+            this.y+=this.vy;
+            if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height) this.reset();
+            this.draw();
+        }
+    }
+
+    for(let i=0;i<maxParticles;i++) particles.push(new Particle());
+
+    function animate(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        // 연결선 그리기
+        for(let i=0;i<particles.length;i++){
+            let p1=particles[i];
+            p1.update();
+            for(let j=i+1;j<particles.length;j++){
+                let p2=particles[j];
+                let dx=p1.x-p2.x, dy=p1.y-p2.y;
+                let dist=Math.sqrt(dx*dx+dy*dy);
+                if(dist<120){
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x,p1.y);
+                    ctx.lineTo(p2.x,p2.y);
+                    ctx.strokeStyle='rgba(0,255,247,'+(0.2*(1-dist/120))+')';
+                    ctx.lineWidth=1;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
 </script>
 </body>
 </html>
