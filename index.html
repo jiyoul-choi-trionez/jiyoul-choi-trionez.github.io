@@ -25,9 +25,17 @@
             color:#e6eef6;
             display:flex;align-items:center;justify-content:center;
             padding:32px;
-            -webkit-font-smoothing:antialiased;
+            overflow:hidden; /* 파티클 배경 넘침 방지 */
+        }
+        canvas#particles {
+            position:fixed;
+            top:0;left:0;right:0;bottom:0;
+            z-index:0;
+            background:linear-gradient(180deg,var(--bg1),var(--bg2));
         }
         .wrap{
+            position:relative;
+            z-index:1;
             width:100%;
             max-width:960px;
             background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
@@ -120,6 +128,8 @@
     </style>
 </head>
 <body>
+<canvas id="particles"></canvas>
+
 <div class="wrap" role="main">
     <div>
         <h1>트리원즈(Trionez)<br><span>공사중입니다</span></h1>
@@ -157,7 +167,63 @@
 </div>
 
 <script>
+    // 자동 연도
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 파티클 배경
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    const colors = ["#ffffff", "#ffb86b", "#ffd6a3"];
+    const maxParticles = 60;
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.r = Math.random() * 2 + 1;
+            this.color = colors[Math.floor(Math.random()*colors.length)];
+            this.vx = (Math.random() - 0.5) * 0.5;
+            this.vy = (Math.random() - 0.5) * 0.5;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = 0.7;
+            ctx.fill();
+            ctx.globalAlpha = 1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height){
+                this.reset();
+            }
+            this.draw();
+        }
+    }
+
+    for(let i=0;i<maxParticles;i++){
+        particles.push(new Particle());
+    }
+
+    function animate(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(p=>p.update());
+        requestAnimationFrame(animate);
+    }
+    animate();
 </script>
 </body>
 </html>
