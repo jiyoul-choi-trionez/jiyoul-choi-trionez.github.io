@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>트리원즈(Trionez) - 홈페이지 리뉴얼중</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#0f172a">
+    <style>
+        :root{
+            --bg1:#0f172a; /* deep */
+            --bg2:#0b2036; /* blue */
+            --accent:#ffb86b;
+            --muted:#9aa6b2;
+            --card:rgba(255,255,255,0.035);
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0;
+            font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+            background:linear-gradient(180deg,var(--bg1),var(--bg2));
+            color: #e6eef6;
+            -webkit-font-smoothing:antialiased;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:32px;
+        }
+        .wrap{
+            width:100%;
+            max-width:1000px;
+            background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius:18px;
+            padding:36px;
+            box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+            display:grid;
+            grid-template-columns: 1fr 420px;
+            gap:28px;
+            align-items:center;
+        }
+        @media(max-width:880px){
+            .wrap{grid-template-columns:1fr; padding:24px}
+        }
+        .brand{
+            display:flex;
+            gap:18px;
+            align-items:center;
+        }
+        .logo{
+            width:86px;height:86px;flex:0 0 86px;border-radius:14px;
+            background:linear-gradient(135deg,var(--accent),#ffd6a3);
+            display:grid;place-items:center;color:#111;font-weight:800;font-size:22px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.5), inset 0 -6px 18px rgba(255,255,255,0.08);
+        }
+        h1{margin:0;font-size:34px;letter-spacing:-0.02em}
+        .lead{margin-top:8px;color:var(--muted);font-size:15px}
+        .status{margin-top:22px;padding:18px;background:var(--card);border-radius:12px;color:var(--muted);}
+        .progress{
+            margin-top:12px;height:10px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden
+        }
+        .progress > i{display:block;height:100%;width:44%;background:linear-gradient(90deg,var(--accent),#ffd6a3);border-radius:999px;transform-origin:left;animation:fill 6s ease-in-out infinite alternate}
+        @keyframes fill{from{width:18%}to{width:78%}}
+        .right{
+            padding:22px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(6px);
+        }
+        .contact{display:flex;flex-direction:column;gap:8px}
+        .btn{display:inline-block;padding:10px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);font-weight:600;text-decoration:none;color:inherit}
+        .small{font-size:13px;color:var(--muted)}
+        .social{display:flex;gap:10px;margin-top:10px}
+        .social a{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.02);text-decoration:none;color:inherit;font-weight:600}
+        footer{margin-top:18px;font-size:13px;color:var(--muted)}
+        /* construction SVG animation */
+        .gear{width:220px;height:220px;margin:auto;display:grid;place-items:center}
+        .gear svg{width:160px;height:160px}
+        .gear .spin{animation:spin 6s linear infinite}
+        @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    </style>
+</head>
+<body>
+<div class="wrap" role="main">
+    <div>
+        <div class="brand">
+            <!--<div class="logo">트리원즈</div>-->
+            <div>
+                <h1>트리원즈(Trionez)<br><span style="font-weight:600;color:var(--accent);font-size:20px">공사중입니다</span></h1>
+                <p class="lead">현재 홈페이지 리뉴얼 작업중입니다. 불편을 드려 죄송하며 빠르게 더 나은 모습으로 찾아뵙겠습니다.</p>
+            </div>
+        </div>
+
+        <div class="status">
+            <div class="small">진행 상태</div>
+            <div class="progress" aria-hidden="true"><i></i></div>
+            <div style="display:flex;gap:12px;margin-top:12px;align-items:center">
+                <a class="btn" href="mailto:hello@triowns.co.kr">문의: jiyoul.choi@trionez.com</a>
+                <!--<span class="small">또는 아래 SNS로 연락주세요</span>-->
+            </div>
+        </div>
+
+        <footer>
+            © <span id="year"></span> Trionez. All rights reserved.
+        </footer>
+    </div>
+
+    <aside class="right" aria-labelledby="construction">
+        <div id="construction" style="text-align:center">
+            <div class="gear" aria-hidden="true">
+                <!-- simple animated gear SVG -->
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="spin" role="img" aria-label="공사 아이콘">
+                    <g fill="none" stroke="currentColor" stroke-width="4">
+                        <circle cx="50" cy="50" r="18" stroke-opacity="0.98" />
+                        <path d="M50 6 L54 20 L66 22 L60 34 L66 46 L54 50 L50 64 L46 50 L34 46 L40 34 L34 22 L46 20 Z" stroke-opacity="0.16"/>
+                    </g>
+                </svg>
+            </div>
+            <h3 style="margin:12px 0 6px 0">곧 새로운 모습으로 찾아옵니다</h3>
+            <p class="small">중요 공지나 긴급 문의가 있으시면 아래 연락처로 남겨주세요.</p>
+
+            <div class="contact" style="margin-top:14px">
+                <div class="small">전화: <strong style="color:#fff">010-3213-3113</strong></div>
+                <div class="small">이메일: <strong style="color:#fff">jiyoul.choi@trionez.com</strong></div>
+            </div>
+            <!--
+            <div class="social" aria-hidden="true">
+                <a href="#" title="Instagram">IG</a>
+                <a href="#" title="LinkedIn">IN</a>
+                <a href="#" title="Twitter">TW</a>
+            </div>
+            -->
+        </div>
+    </aside>
+</div>
+
+<script>
+    // 자동으로 연도 갱신
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
